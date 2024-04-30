@@ -5,7 +5,6 @@ import passport from 'passport';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api');
   app.enableCors({
     credentials: true,
     origin: process.env.ORIGIN,
@@ -13,12 +12,15 @@ async function bootstrap() {
 
   app.use(
     session({
+      name: 'nest.sid',
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: 'strict',
+        priority: 'high',
       },
     })
   );
