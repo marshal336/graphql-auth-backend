@@ -1,4 +1,4 @@
-import { InputType, Int, Field, } from '@nestjs/graphql';
+import { InputType, Int, Field, ID, } from '@nestjs/graphql';
 
 @InputType()
 export class UserInputSigIn {
@@ -16,4 +16,21 @@ export class UserInputSigUp {
   username: string;
   @Field()
   password: string;
+}
+
+@InputType()
+export class UserInputUpdate {
+
+  @Field({ nullable: true })
+  username: string
+
+  @Field({ nullable: true })
+  email: string
+
+  @Field({ nullable: true })
+  password: string
+
+  @Field({ nullable: true })
+  profilePicturer: string
+
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UserInputSigUp } from './dto/user.input';
+import { UserInputSigUp, UserInputUpdate, } from './dto/user.input';
 import * as argon from 'argon2'
 
 @Injectable()
@@ -27,6 +27,17 @@ export class UserService {
   }
   async findByEmail(email: string) {
     const user = this.prisma.user.findFirst({ where: { email } })
+    return user
+  }
+  async update(input: UserInputUpdate, id: string) {
+    let data = input
+    if (input.password) {
+      data = { ...input, password: await argon.hash(input.password) }
+    }
+    const user = await this.prisma.user.update({
+      where: { id },
+      data
+    })
     return user
   }
 }

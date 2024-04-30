@@ -10,7 +10,7 @@ export class AuthService {
   ) {
   }
   async validateUser(email: string, password: string) {
-    const { password: pass, ...user } = await this.userService.findByEmail(email)
+    const { password: pass, ...user } = await this.userService.findByEmail(email) 
     const isValidPass = await argon.verify(pass, password)
     if ((!user && !isValidPass) || (!user || !isValidPass)) {
       throw new UnauthorizedException('You not authorize!')

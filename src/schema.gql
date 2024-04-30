@@ -13,12 +13,13 @@ type User {
 }
 
 type Query {
-  getOne(id: String!): User!
+  profile(id: String!): User!
 }
 
 type Mutation {
   signUp(input: UserInputSigUp!): User!
   signIn(input: UserInputSigIn!): User!
+  updatde(input: UserInputUpdate!): User!
 }
 
 input UserInputSigUp {
@@ -30,4 +31,11 @@ input UserInputSigUp {
 input UserInputSigIn {
   email: String!
   password: String!
+}
+
+input UserInputUpdate {
+  username: String
+  email: String
+  password: String
+  profilePicturer: String
 }
