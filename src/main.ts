@@ -2,6 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import session from 'express-session';
 import passport from 'passport';
+import CookieParser from 'cookie-parser'
+import { graphqlUploadExpress } from 'graphql-upload-ts';
+import { join } from 'path';
+import express from 'express'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,10 +13,15 @@ async function bootstrap() {
     credentials: true,
     origin: process.env.ORIGIN,
   });
-
+  app.use(
+    '/graphql',
+    graphqlUploadExpress({ maxFieldSize: 100000 }),
+  )
+  app.use('/graphql/uploads', express.static(join(__dirname, '..', 'uploads')))
+  app.use(CookieParser())
   app.use(
     session({
-      name: 'nest.sid',
+      name: process.env.SESSION_NAME,
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
