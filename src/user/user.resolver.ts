@@ -13,7 +13,7 @@ export class UserResolver {
   constructor(private readonly userService: UserService) { }
 
   @Query(returns => User)
-  // @UseGuards(IsAuthenticated)
+  @UseGuards(IsAuthenticated)
   async profile(
     @UserID() user: User,
     @Args('id') id: string
@@ -22,7 +22,7 @@ export class UserResolver {
   }
 
   @Mutation(returns => User)
-  // @UseGuards(IsAuthenticated)
+  @UseGuards(IsAuthenticated)
   async updade(
     @Context() context: any,
     @UserID() user: User,
@@ -30,22 +30,13 @@ export class UserResolver {
     @Args({ name: 'profilePicturer', type: () => GraphQLUpload }) profilePicturer: any
   ) {
     const { filename, createReadStream } = await profilePicturer
-    console.log(profilePicturer);
-    
-    if (filename) {
-      const dirPath = 'uploads';
-      if (!existsSync(dirPath)) {
-        mkdirSync(dirPath, { recursive: true });
+    if(filename) {
+      const dir = 'uploads'
+      if(!existsSync(dir)) {
+        mkdirSync(dir)
       }
-      createReadStream()
-        .pipe(createWriteStream(`${dirPath}/${filename}`))
-        .on('finish', () => {
-          console.log('IMAGE_CREATED_IN_DIRECTORY');
-        })
-        .on('error', (error: any) => {
-          console.log('IMAGE_UPLOAD_ERROR', error);
-        });
+      createReadStream().pipe(createWriteStream(`${dir}/${filename}`))
     }
-    return await this.userService.update(input, input.email)
+    return await this.userService.update(input, user.email, '')
   }
 }

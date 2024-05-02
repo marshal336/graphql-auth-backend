@@ -36,6 +36,7 @@ input UserInputSigIn {
 input UserInputUpdate {
   username: String
   email: String
+  password: String
 }
 
 """The `Upload` scalar type represents a file upload."""

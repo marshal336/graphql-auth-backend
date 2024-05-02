@@ -27,12 +27,20 @@ export class UserService {
     const user = this.prisma.user.findFirst({ where: { email } })
     return user
   }
-  async update(input: UserInputUpdate, email: string) {
-    let data = input
-    const user = await this.prisma.user.update({
-      where: { email },
-      data
-    })
-    return user
+  async update(input: UserInputUpdate, email: string, profilePicturer: any) {
+    const exist = await this.prisma.user.findFirst({ where: { email: input.email } })
+    if (exist) {
+      const user = await this.prisma.user.update({
+        where: { email },
+        data: {
+          email: input.email,
+          username: input.username,
+          password: input?.password ? await argon.hash(input.password) : exist.password,
+          profilePicturer: profilePicturer ? `http://localhost:5500/graphql/uploads/${profilePicturer}` : null
+        }
+      })
+      return user
+    }
+    return null
   }
 }
