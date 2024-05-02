@@ -37,6 +37,6 @@ export class UserResolver {
       }
       createReadStream().pipe(createWriteStream(`${dir}/${filename}`))
     }
-    return await this.userService.update(input, user.email, '')
+    return await this.userService.update(input, user.email, filename)
   }
 }
