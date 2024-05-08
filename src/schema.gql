@@ -1,0 +1,43 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  password: String!
+  profilePicturer: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Query {
+  profile(id: String!): User!
+}
+
+type Mutation {
+  signUp(input: UserInputSigUp!): User!
+  signIn(input: UserInputSigIn!): User!
+  updade(input: UserInputUpdate!, profilePicturer: Upload!): User!
+}
+
+input UserInputSigUp {
+  email: String!
+  username: String!
+  password: String!
+}
+
+input UserInputSigIn {
+  email: String!
+  password: String!
+}
+
+input UserInputUpdate {
+  username: String
+  email: String
+  password: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

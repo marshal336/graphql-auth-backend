@@ -128,7 +128,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/vladvarlamov/Desktop/server/prisma/@prisma/client",
+      "value": "/Users/vladvarlamov/graphql-auth-backend/prisma/@prisma/client",
       "fromEnvVar": null
     },
     "config": {
@@ -155,7 +155,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
